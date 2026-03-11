@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arif Ansari — Financial Crime · Compliance · Regulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+/* ─── CURSOR ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
+
+#c-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1.5px solid rgba(139,105,38,.5);
+  border-radius: 50%; pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .22s, height .22s, background .22s, border-color .22s;
+}
+#c-dot {
+  position: fixed; width: 5px; height: 5px;
+  background: #8B6926; border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+}
+#c-ring.on { width: 56px; height: 56px; background: rgba(139,105,38,.07); border-color: #8B6926; }
+#c-dot.on  { background: #B8892A; width: 7px; height: 7px; }
+
+/* ─── TOKENS ─────────────────────────────────────────── */
+:root {
+  --bg:        #FAF8F3;
+  --bg2:       #F3F0E8;
+  --bg3:       #EDE9DC;
+  --surface:   #E8E3D5;
+  --border:    #D8D2C0;
+  --border2:   #C8C0A8;
+
+  --navy:      #1B2A4A;
+  --navy2:     #243659;
+  --navy3:     #2E4470;
+
+  --brass:     #8B6926;
+  --brass2:    #B8892A;
+  --brass-dim: rgba(139,105,38,.12);
+  --brass-line:rgba(139,105,38,.3);
+
+  --sage:      #5C7A6A;
+  --sage2:     #7A9E8A;
+  --sage-dim:  rgba(92,122,106,.1);
+
+  --ink:       #1B2A4A;
+  --ink2:      #3A4E6A;
+  --ink3:      #6A7A90;
+  --ink4:      #9AA0AC;
+
+  --serif:   'Cormorant Garamond', Georgia, serif;
+  --display: 'Playfair Display', Georgia, serif;
+  --mono:    'DM Mono', monospace;
+}
+
+/* ─── BASE ───────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* Subtle paper texture via noise */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: .6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ─── NAV ────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 4rem;
+  background: rgba(250,248,243,.94);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink3);
+  display: flex; align-items: center; gap: .7rem;
+}
+.nav-dot {
+  width: 6px; height: 6px; background: var(--brass);
+  border-radius: 50%;
+  animation: blink 2.5s ease-in-out infinite;
+}
+@keyframes blink {
+  0%,100% { box-shadow: 0 0 5px 1px rgba(139,105,38,.6); }
+  50%      { box-shadow: 0 0 10px 3px rgba(139,105,38,.15); opacity:.5; }
+}
+
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-family: var(--mono);
+  font-size: .6rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--ink4); transition: color .2s;
+}
+.nav-links a:hover { color: var(--brass); }
+
+.nav-cta {
+  font-family: var(--mono);
+  font-size: .6rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--navy); border: 1px solid var(--border2);
+  padding: .35rem .9rem;
+  transition: background .2s, border-color .2s;
+}
+.nav-cta:hover { background: var(--bg2); border-color: var(--brass-line); }
+
+/* ─── HERO ───────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 10rem 4rem 6rem;
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(139,105,38,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,105,38,.07) 1px, transparent 1px);
+  background-size: 68px 68px;
+  pointer-events: none;
+}
+
+/* Gradient wash */
+.hero-wash {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 65% 55% at 5% 50%, rgba(92,122,106,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 95% 20%, rgba(139,105,38,.05) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.hero-vline {
+  position: absolute; top: 0; left: 0;
+  width: 2px; height: 100%;
+  background: linear-gradient(to bottom, transparent 5%, var(--brass) 35%, var(--brass) 65%, transparent 95%);
+  opacity: .25;
+}
+
+.hero-stamp {
+  position: absolute; top: 5.75rem; right: 4rem;
+  font-family: var(--mono);
+  font-size: .56rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--sage); border: 1px solid rgba(92,122,106,.35);
+  background: rgba(92,122,106,.07);
+  padding: .35rem .85rem;
+}
+
+.hero-bg-text {
+  position: absolute; bottom: -2rem; right: -1rem;
+  font-family: var(--display);
+  font-size: 26vw; font-weight: 900; font-style: italic;
+  color: rgba(27,42,74,.04);
+  line-height: 1; pointer-events: none; user-select: none;
+  white-space: nowrap;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: .65rem; letter-spacing: .28em; text-transform: uppercase;
+  color: var(--brass);
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 1.75rem; position: relative;
+}
+.hero-eyebrow::before { content:''; width:28px; height:1px; background: var(--brass); }
+
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(3.8rem, 9.5vw, 9rem);
+  font-weight: 900; line-height: .95;
+  color: var(--navy);
+  margin-bottom: 2rem; position: relative;
+  letter-spacing: -.01em;
+}
+.hero h1 .italic { font-style: italic; font-weight: 700; color: var(--brass); }
+
+.hero-tagline {
+  font-family: var(--mono);
+  font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--ink3); margin-bottom: 1.5rem; position: relative;
+}
+.hero-tagline span { color: var(--navy); }
+
+.hero-desc {
+  font-family: var(--serif);
+  font-size: 1.15rem; font-style: italic;
+  color: var(--ink2); max-width: 600px;
+  line-height: 1.7; margin-bottom: 3rem; position: relative;
+}
+
+.hero-actions { display: flex; gap: 1.25rem; margin-bottom: 5rem; position: relative; }
+
+.btn-primary {
+  font-family: var(--mono);
+  font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--bg); background: var(--navy);
+  padding: .7rem 1.75rem;
+  transition: background .2s;
+}
+.btn-primary:hover { background: var(--navy3); }
+
+.btn-secondary {
+  font-family: var(--mono);
+  font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--brass); border: 1px solid var(--brass-line);
+  padding: .7rem 1.75rem;
+  transition: background .2s;
+}
+.btn-secondary:hover { background: var(--brass-dim); }
+
+.hero-stats {
+  display: flex; gap: 0;
+  border: 1px solid var(--border2);
+  background: var(--bg2);
+  width: fit-content; position: relative;
+}
+.hstat {
+  padding: 1.25rem 2.25rem;
+  border-right: 1px solid var(--border);
+}
+.hstat:last-child { border-right: none; }
+.hstat-n {
+  font-family: var(--display);
+  font-size: 2.3rem; font-weight: 700; line-height: 1;
+  color: var(--navy);
+}
+.hstat-n .u { color: var(--brass); }
+.hstat-l {
+  font-family: var(--mono);
+  font-size: .52rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink4); margin-top: .3rem; line-height: 1.5;
+}
+
+/* ─── TICKER ─────────────────────────────────────────── */
+.ticker {
+  background: var(--navy);
+  padding: .7rem 0; overflow: hidden; white-space: nowrap;
+  position: relative;
+}
+.ticker::before, .ticker::after {
+  content:''; position: absolute; top:0; bottom:0; width:80px; z-index:2;
+}
+.ticker::before { left:0;  background: linear-gradient(to right, var(--navy), transparent); }
+.ticker::after  { right:0; background: linear-gradient(to left, var(--navy), transparent); }
+
+.ticker-track {
+  display: inline-block;
+  animation: march 42s linear infinite;
+  font-family: var(--mono);
+  font-size: .6rem; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(250,248,243,.5);
+}
+.ticker-track .g { color: var(--brass2); margin: 0 1.25rem; }
+@keyframes march { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── SECTIONS ───────────────────────────────────────── */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 4rem; }
+
+section { padding: 7rem 0; border-top: 1px solid var(--border); position: relative; z-index:1; }
+
+.s-label {
+  font-family: var(--mono);
+  font-size: .58rem; letter-spacing: .28em; text-transform: uppercase;
+  color: var(--brass); margin-bottom: .6rem;
+  display: flex; align-items: center; gap: .75rem;
+}
+.s-label::after { content:''; width:36px; height:1px; background: var(--brass-line); }
+
+.s-title {
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 700; line-height: 1.1;
+  color: var(--navy); margin-bottom: 3rem;
+}
+.s-title em { font-style: italic; font-weight: 400; color: var(--brass); }
+
+/* ─── ABOUT ──────────────────────────────────────────── */
+.about-body {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; margin-bottom: 3.5rem;
+}
+.about-prose { font-size: 1.05rem; color: var(--ink2); line-height: 1.8; }
+.about-prose p { margin-bottom: 1.25rem; }
+.about-prose strong { color: var(--navy); font-weight: 600; }
+
+.about-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); align-self: start;
+}
+.astat {
+  background: var(--bg2); padding: 1.6rem 1.75rem;
+  transition: background .2s;
+}
+.astat:hover { background: var(--bg3); }
+.astat-n {
+  font-family: var(--display);
+  font-size: 2.2rem; font-weight: 700; line-height: 1;
+  color: var(--navy); margin-bottom: .3rem;
+}
+.astat-n .u { color: var(--brass); font-size: 1.4rem; }
+.astat-l {
+  font-family: var(--mono);
+  font-size: .54rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink4); line-height: 1.5;
+}
+
+/* ─── EXPERIENCE ─────────────────────────────────────── */
+.exp-list { display: flex; flex-direction: column; }
+.exp-row {
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 3.5rem; padding: 3rem 0;
+  border-top: 1px solid var(--border);
+}
+.exp-row:last-child { border-bottom: 1px solid var(--border); }
+
+.exp-period {
+  font-family: var(--mono);
+  font-size: .58rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brass); margin-bottom: .5rem;
+}
+.exp-co { font-weight: 600; font-size: .98rem; color: var(--navy); margin-bottom: .2rem; }
+.exp-place {
+  font-family: var(--mono);
+  font-size: .52rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink4);
+}
+
+.exp-role {
+  font-family: var(--display);
+  font-size: 1.9rem; font-style: italic; font-weight: 400;
+  color: var(--navy); margin-bottom: .8rem; line-height: 1.15;
+}
+.exp-blurb {
+  font-size: .96rem; font-style: italic;
+  color: var(--ink2); line-height: 1.75; margin-bottom: 1.25rem;
+}
+.exp-ul {
+  list-style: none; display: flex; flex-direction: column;
+  gap: .5rem; margin-bottom: 1.5rem;
+}
+.exp-ul li {
+  font-size: .9rem; color: var(--ink2);
+  padding-left: 1.5rem; position: relative; line-height: 1.65;
+}
+.exp-ul li::before {
+  content: '◆'; position: absolute; left: 0;
+  color: var(--brass); font-size: .42rem; top: .52em;
+}
+.exp-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.etag {
+  font-family: var(--mono);
+  font-size: .52rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink3); border: 1px solid var(--border);
+  padding: .2rem .65rem; background: var(--bg2);
+  transition: border-color .15s, color .15s;
+}
+.etag:hover { border-color: var(--brass-line); color: var(--brass); }
+
+/* ─── COMPLIANCE PROFILE ─────────────────────────────── */
+.profile-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border); border: 1px solid var(--border);
+}
+.pcard {
+  background: var(--bg);
+  padding: 2rem 1.85rem;
+  position: relative; overflow: hidden;
+  transition: background .2s;
+}
+.pcard::after {
+  content: ''; position: absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--brass), transparent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .25s;
+}
+.pcard:hover { background: var(--bg2); }
+.pcard:hover::after { transform: scaleX(1); }
+
+.pcard-icon {
+  font-family: var(--mono); font-size: 1.5rem;
+  color: var(--sage); margin-bottom: 1.1rem; line-height: 1;
+}
+.pcard-title {
+  font-family: var(--serif); font-size: 1.05rem; font-weight: 600;
+  color: var(--navy); margin-bottom: .5rem;
+}
+.pcard-text { font-size: .88rem; color: var(--ink2); line-height: 1.7; }
+
+/* ─── EDUCATION ──────────────────────────────────────── */
+.edu-list { display: flex; flex-direction: column; }
+.edu-row {
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 3.5rem; padding: 3rem 0;
+  border-top: 1px solid var(--border);
+}
+.edu-row:last-child { border-bottom: 1px solid var(--border); }
+
+.edu-year {
+  font-family: var(--mono);
+  font-size: .58rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brass); margin-bottom: .5rem;
+}
+.edu-inst { font-size: .85rem; font-style: italic; color: var(--ink3); }
+
+.edu-degree {
+  font-family: var(--display); font-size: 1.7rem; font-style: italic;
+  font-weight: 400; color: var(--navy);
+  margin-bottom: .75rem; line-height: 1.2;
+}
+.edu-ul {
+  list-style: none; display: flex; flex-direction: column;
+  gap: .35rem; margin-top: .75rem;
+}
+.edu-ul li {
+  font-size: .88rem; color: var(--ink2);
+  padding-left: 1rem; position: relative; line-height: 1.6;
+}
+.edu-ul li::before { content:'—'; position: absolute; left:0; color: var(--brass); font-size:.7rem; }
+.edu-ul strong { color: var(--navy); font-weight: 600; }
+
+.edu-badge {
+  display: inline-block; margin-top: .85rem;
+  font-family: var(--mono); font-size: .54rem; letter-spacing: .1em; text-transform: uppercase;
+  background: var(--navy); color: var(--bg); padding: .22rem .65rem;
+}
+
+/* ─── BEYOND ─────────────────────────────────────────── */
+.beyond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+
+.achiev-list { list-style: none; display: flex; flex-direction: column; gap: .85rem; }
+.achiev-list li { display: flex; gap: 1.25rem; align-items: baseline; }
+.achiev-year {
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .12em;
+  color: var(--brass); min-width: 36px; text-align: right;
+}
+.achiev-text { font-size: .9rem; color: var(--ink2); line-height: 1.6; }
+
+.skill-rows { display: flex; flex-direction: column; gap: 1.25rem; }
+.skill-row {
+  display: grid; grid-template-columns: 140px 1fr;
+  gap: 1.25rem; border-top: 1px solid var(--border); padding-top: 1rem;
+}
+.skill-key {
+  font-family: var(--mono); font-size: .56rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--sage); padding-top: .1rem;
+}
+.skill-val { font-size: .9rem; color: var(--ink2); line-height: 1.65; }
+
+/* ─── CONTACT ────────────────────────────────────────── */
+.contact-section { background: var(--navy); }
+.contact-section .wrap { padding-top: 7rem; padding-bottom: 7rem; }
+.contact-section .s-label { color: var(--brass2); }
+.contact-section .s-label::after { background: rgba(184,137,42,.3); }
+
+.contact-hero {
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 7vw, 6.5rem);
+  font-weight: 700; line-height: 1.0;
+  color: var(--bg); margin-bottom: 1.5rem;
+}
+.contact-hero em { font-style: italic; font-weight: 400; color: var(--brass2); }
+
+.contact-sub {
+  font-size: 1.05rem; font-style: italic;
+  color: rgba(250,248,243,.55); max-width: 520px;
+  line-height: 1.7; margin-bottom: 3rem;
+}
+
+.contact-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 1px solid rgba(255,255,255,.1);
+}
+.cgrid-cell {
+  padding: 1.85rem;
+  border-right: 1px solid rgba(255,255,255,.1);
+  transition: background .2s;
+}
+.cgrid-cell:last-child { border-right: none; }
+.cgrid-cell:hover { background: rgba(255,255,255,.04); }
+.cgrid-label {
+  font-family: var(--mono); font-size: .52rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--brass2); margin-bottom: .5rem;
+}
+.cgrid-val { font-size: .9rem; color: rgba(250,248,243,.6); line-height: 1.55; }
+.cgrid-val a { color: rgba(250,248,243,.6); transition: color .15s; }
+.cgrid-val a:hover { color: var(--brass2); }
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 1.4rem 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer p {
+  font-family: var(--mono); font-size: .54rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(250,248,243,.3);
+}
+
+/* ─── REVEAL ─────────────────────────────────────────── */
+.r { opacity:0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+.r.in { opacity:1; transform: none; }
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 860px) {
+  nav { padding: 0 1.5rem; }
+  .nav-links, .nav-cta { display: none; }
+  .wrap { padding: 0 1.5rem; }
+  .hero { padding: 8rem 1.5rem 4rem; }
+  .hero h1 { font-size: 3.4rem; }
+  .hero-stamp { display: none; }
+  .hero-stats { flex-wrap: wrap; }
+  .hstat { min-width: 110px; }
+  section { padding: 4rem 0; }
+  .about-body { grid-template-columns: 1fr; gap: 2.5rem; }
+  .about-stats { grid-template-columns: 1fr 1fr; }
+  .exp-row, .edu-row { grid-template-columns: 1fr; gap: .75rem; }
+  .profile-grid { grid-template-columns: 1fr; }
+  .beyond-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .contact-grid { grid-template-columns: 1fr 1fr; }
+  .cgrid-cell { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); }
+  footer { padding: 1.25rem 1.5rem; flex-direction: column; gap: .5rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="c-ring"></div>
+<div id="c-dot"></div>
+
+<!-- ─── NAV ─────────────────────────────────────────── -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-dot"></div>
+    Arif Ansari
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#compliance">Compliance Profile</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Get in touch</a>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-wash"></div>
+  <div class="hero-vline"></div>
+  <div class="hero-bg-text">FORENSIC</div>
+  <div class="hero-stamp">Available Now · London / Coventry</div>
+
+  <div class="hero-eyebrow">Md Arif Ansari · Financial Crime &amp; Compliance</div>
+
+  <h1>
+    Regulation.<br>
+    Risk. <span class="italic">Integrity.</span>
+  </h1>
+
+  <div class="hero-tagline">
+    <span>Chevening Scholar</span> · <span>Warwick Gold Medallist</span> · <span>AML Certified</span>
+  </div>
+
+  <p class="hero-desc">
+    A rare convergence of elite legal training, cross-border regulatory expertise, and AML-certified knowledge — built across three countries and three degrees. Targeting financial crime, KYC and compliance roles.
+  </p>
+
+  <div class="hero-actions">
+    <a class="btn-primary" href="#contact">Get in touch</a>
+    <a class="btn-secondary" href="#about">Explore</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hstat">
+      <div class="hstat-n"><span class="u">&lt;</span>1<span class="u">%</span></div>
+      <div class="hstat-l">Chevening<br>Selection Rate</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">82<span class="u">%</span></div>
+      <div class="hstat-l">International Tax<br>Warwick LLM</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">30<span class="u">+</span></div>
+      <div class="hstat-l">Ownership Structures<br>Analysed</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">AIR <span class="u">49</span></div>
+      <div class="hstat-l">NLU Delhi<br>out of 4,000</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">3</div>
+      <div class="hstat-l">Jurisdictions<br>IN · UK · EU</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TICKER ───────────────────────────────────────── -->
+<div class="ticker">
+  <div class="ticker-track">
+    AML / CTF Frameworks <span class="g">◆</span> KYC &amp; CDD Analysis <span class="g">◆</span> Corporate Ownership Structures <span class="g">◆</span> FATF Recommendations <span class="g">◆</span> FCA Regulatory Environment <span class="g">◆</span> Sanctions Compliance <span class="g">◆</span> Basel Institute Certified <span class="g">◆</span> Sumsub AML Certified <span class="g">◆</span> LexisNexis Advanced <span class="g">◆</span> Westlaw Advanced <span class="g">◆</span> Cross-border Risk Analysis <span class="g">◆</span> Companies House <span class="g">◆</span> Financial Crime Risk <span class="g">◆</span> Due Diligence <span class="g">◆</span> Zero-Error Accuracy <span class="g">◆</span> Beneficial Ownership <span class="g">◆</span>&nbsp;
+    AML / CTF Frameworks <span class="g">◆</span> KYC &amp; CDD Analysis <span class="g">◆</span> Corporate Ownership Structures <span class="g">◆</span> FATF Recommendations <span class="g">◆</span> FCA Regulatory Environment <span class="g">◆</span> Sanctions Compliance <span class="g">◆</span> Basel Institute Certified <span class="g">◆</span> Sumsub AML Certified <span class="g">◆</span> LexisNexis Advanced <span class="g">◆</span> Westlaw Advanced <span class="g">◆</span> Cross-border Risk Analysis <span class="g">◆</span> Companies House <span class="g">◆</span> Financial Crime Risk <span class="g">◆</span> Due Diligence <span class="g">◆</span> Zero-Error Accuracy <span class="g">◆</span> Beneficial Ownership <span class="g">◆</span>&nbsp;
+  </div>
+</div>
+
+<!-- ─── ABOUT ─────────────────────────────────────────── -->
+<section id="about">
+  <div class="wrap">
+    <div class="r">
+      <div class="s-label">The Profile</div>
+      <h2 class="s-title">Where law meets <em>investigation.</em></h2>
+    </div>
+    <div class="about-body r">
+      <div class="about-prose">
+        <p>I am a law graduate with a rare and deliberate profile: elite academic credentials from Warwick and Delhi, paralegal experience in UK-regulated environments, and a grounding in corporate and international tax that most compliance candidates never acquire.</p>
+        <p>My route into financial crime is unconventional — and that is the point. I bring <strong>regulatory interpretation</strong> honed across Indian, UK and EU jurisdictions, the precision of someone trained in legal documentation, and the cross-cultural fluency of someone who has operated across India, Malaysia, and the UK.</p>
+        <p>I am actively pursuing entry-level roles in <strong>financial crime, AML/KYC and compliance</strong> — where legal precision and regulatory knowledge are both essential. Certified through the Basel Institute on Governance and Sumsub. ICA Certificate in Anti-Money Laundering in progress.</p>
+      </div>
+      <div class="about-stats">
+        <div class="astat">
+          <div class="astat-n">#1</div>
+          <div class="astat-l">Top of cohort,<br>Warwick LLM</div>
+        </div>
+        <div class="astat">
+          <div class="astat-n">AIR <span class="u">49</span></div>
+          <div class="astat-l">NLU Delhi —<br>out of 4,000</div>
+        </div>
+        <div class="astat">
+          <div class="astat-n">AIR <span class="u">76</span></div>
+          <div class="astat-l">LLB — out of<br>1.3 million</div>
+        </div>
+        <div class="astat">
+          <div class="astat-n">30<span class="u">+</span></div>
+          <div class="astat-l">Ownership<br>structures analysed</div>
+        </div>
+        <div class="astat">
+          <div class="astat-n">3</div>
+          <div class="astat-l">Countries<br>worked across</div>
+        </div>
+        <div class="astat">
+          <div class="astat-n"><span class="u">&lt;</span>1<span class="u">%</span></div>
+          <div class="astat-l">Chevening<br>selection rate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EXPERIENCE ───────────────────────────────────── -->
+<section id="experience">
+  <div class="wrap">
+    <div class="r">
+      <div class="s-label">Career</div>
+      <h2 class="s-title">Experience</h2>
+    </div>
+    <div class="exp-list">
+
+      <div class="exp-row r">
+        <div>
+          <div class="exp-period">2025 – Present</div>
+          <div class="exp-co">MS Society</div>
+          <div class="exp-place">Community · UK</div>
+        </div>
+        <div>
+          <div class="exp-role">Finance Volunteer</div>
+          <div class="exp-blurb">Volunteering with the MS Society's local group — managing group finances and supporting the delivery of services for people affected by multiple sclerosis.</div>
+          <ul class="exp-ul">
+            <li>Accurately maintaining income and expenditure records using the Online Accounting system, ensuring full audit trail and financial transparency</li>
+            <li>Ensuring compliance with MS Society financial requirements and policies — applying regulatory standards to real financial governance</li>
+            <li>Budget planning for the year ahead and preparation for year-end reporting with the group committee</li>
+            <li>Approving income and expenditure with group bank account signatories and supporting delivery of safe, cost-effective group activities</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="etag">Financial Governance</span>
+            <span class="etag">Compliance</span>
+            <span class="etag">Budget Planning</span>
+            <span class="etag">Audit Trails</span>
+            <span class="etag">Charity Finance</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row r">
+        <div>
+          <div class="exp-period">Nov 2025 – Jan 2026</div>
+          <div class="exp-co">BeSavvy Simulators</div>
+          <div class="exp-place">London, UK</div>
+        </div>
+        <div>
+          <div class="exp-role">Research Intern</div>
+          <div class="exp-blurb">Analysed complex corporate ownership structures and transaction flows for an AI training platform now deployed at a leading US law firm.</div>
+          <ul class="exp-ul">
+            <li>Documented 30+ corporate ownership structures and risk patterns with auditable precision — directly applicable to KYC, CDD and beneficial ownership analysis</li>
+            <li>Translated regulatory and transactional reasoning into structured, replicable formats; maintained zero-error accuracy across all deliverables</li>
+            <li>Applied first-principles analysis to decompose multi-layered structures into component risks — the same methodology used in financial crime investigations</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="etag">Ownership Structures</span>
+            <span class="etag">Risk Documentation</span>
+            <span class="etag">Due Diligence</span>
+            <span class="etag">Zero-Error Accuracy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row r">
+        <div>
+          <div class="exp-period">Mar – May 2025</div>
+          <div class="exp-co">Burney Legal</div>
+          <div class="exp-place">London, UK</div>
+        </div>
+        <div>
+          <div class="exp-role">Paralegal</div>
+          <div class="exp-blurb">Supported a multi-practice London firm across Corporate, Immigration and Litigation — working in UK-regulated environments with sensitive client documentation.</div>
+          <ul class="exp-ul">
+            <li>Managed documentation for 10+ corporate immigration applications ensuring completeness and compliance with UK statutory requirements</li>
+            <li>Drafted 15 legal submissions with commercial law analysis, regulatory compliance and cross-border research under time pressure</li>
+            <li>Handled confidential client information across three departments with strict confidentiality throughout</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="etag">UK Regulatory Compliance</span>
+            <span class="etag">Documentation Management</span>
+            <span class="etag">Westlaw / LexisNexis</span>
+            <span class="etag">Companies House</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row r">
+        <div>
+          <div class="exp-period">Dec 2023 – Sep 2024</div>
+          <div class="exp-co">Delhi Bar Council</div>
+          <div class="exp-place">India</div>
+        </div>
+        <div>
+          <div class="exp-role">Advocate</div>
+          <div class="exp-blurb">Practised across criminal, corporate and contempt litigation — drafting complex legal instruments and managing multi-jurisdictional matters.</div>
+          <ul class="exp-ul">
+            <li>Drafted SOFs, rejoinder affidavits, show cause notices and legal submissions for complex multi-jurisdictional matters</li>
+            <li>Prepared 14 case briefs and appeals; independently drafted commercial and property deeds</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="etag">Litigation</span>
+            <span class="etag">Corporate Drafting</span>
+            <span class="etag">Multi-jurisdictional</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row r">
+        <div>
+          <div class="exp-period">Jun 2025</div>
+          <div class="exp-co">Mereka</div>
+          <div class="exp-place">Malaysia &amp; UK (Remote)</div>
+        </div>
+        <div>
+          <div class="exp-role">Corporate Volunteer</div>
+          <div class="exp-blurb">Led cross-timezone operations for an EdTech company, driving measurable enrolment growth through structured stakeholder management.</div>
+          <ul class="exp-ul">
+            <li>Onboarded 10 mentors and drove 40% growth in student enrolment through targeted outreach</li>
+            <li>Managed stakeholder relationships across Malaysia, the UK and India under tight deadlines</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="etag">Stakeholder Management</span>
+            <span class="etag">Operations</span>
+            <span class="etag">Cross-cultural</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row r">
+        <div>
+          <div class="exp-period">2021 – Ongoing</div>
+          <div class="exp-co">FG Law-Kit (YouTube)</div>
+          <div class="exp-place">Online</div>
+        </div>
+        <div>
+          <div class="exp-role">Co-Founder &amp; Content Lead</div>
+          <div class="exp-blurb">Built a legal-education channel to 45,000+ subscribers, translating dense regulatory content into accurate, accessible material for non-specialist audiences.</div>
+          <ul class="exp-ul">
+            <li>Translated complex regulatory frameworks into accessible content at scale — core communication skill compliance teams need</li>
+            <li>Defended three copyright challenges through structured documentation and stakeholder negotiation</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="etag">Communication</span>
+            <span class="etag">Legal Education</span>
+            <span class="etag">Content Strategy</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── COMPLIANCE PROFILE ───────────────────────────── -->
+<section id="compliance" style="background: var(--bg2);">
+  <div class="wrap">
+    <div class="r">
+      <div class="s-label">Compliance Profile</div>
+      <h2 class="s-title">The regulatory <em>edge.</em></h2>
+    </div>
+    <div class="profile-grid r">
+      <div class="pcard">
+        <div class="pcard-icon">◈</div>
+        <div class="pcard-title">Regulatory Interpretation</div>
+        <div class="pcard-text">Gold Medal at Warwick in International Taxation (82%) and Corporate Tax (80%). Deep grounding in cross-border structures and jurisdictional risk — directly applicable to AML and sanctions compliance.</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-icon">⌖</div>
+        <div class="pcard-title">Ownership Structure &amp; KYC</div>
+        <div class="pcard-text">Hands-on analysis of 30+ complex corporate ownership structures — extracting risk patterns and documenting decision-making frameworks with zero-error accuracy.</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-icon">◇</div>
+        <div class="pcard-title">AML / CTF Knowledge</div>
+        <div class="pcard-text">Certified through Basel Institute on Governance and Sumsub. ICA Certificate in AML in progress. Familiar with FATF Recommendations, UK AML/CTF framework and FCA environment.</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-icon">△</div>
+        <div class="pcard-title">Cross-border Risk</div>
+        <div class="pcard-text">Multi-jurisdiction perspective across India, UK and EU. LLM dissertation examined state power, digital regulation and jurisdictional limits — applicable to sanctions and financial crime risk.</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-icon">□</div>
+        <div class="pcard-title">Documentation &amp; Audit</div>
+        <div class="pcard-text">Advanced-certified in Westlaw and LexisNexis. Paralegal experience managing regulated documentation. Legal training built an instinct for auditable, structured records.</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-icon">⬡</div>
+        <div class="pcard-title">Communication of Complexity</div>
+        <div class="pcard-text">Built a 45,000-subscriber YouTube channel making dense regulatory content accessible to non-specialists. Proven ability to translate AML to front-office staff — at scale.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EDUCATION ─────────────────────────────────────── -->
+<section id="education">
+  <div class="wrap">
+    <div class="r">
+      <div class="s-label">Academic Record</div>
+      <h2 class="s-title">Education</h2>
+    </div>
+    <div class="edu-list">
+      <div class="edu-row r">
+        <div>
+          <div class="edu-year">2024 – 2025</div>
+          <div class="edu-inst">University of Warwick · Coventry, UK</div>
+        </div>
+        <div>
+          <div class="edu-degree">LLM — International &amp; Corporate Taxation</div>
+          <ul class="edu-ul">
+            <li><strong>Top 1% of cohort</strong> — International Taxation 82%, Corporate Tax 80%</li>
+            <li><strong>Chevening-Marang Gomke Overseas Scholarship</strong>, Government of India — selection rate under 1%</li>
+            <li>Dissertation: "The Sovereignty Paradox: Digital Services Taxes, Political Jurisprudence and the Limits of State Power"</li>
+            <li>Certifications: LexisNexis (Advanced), Westlaw (Advanced)</li>
+          </ul>
+          <span class="edu-badge">🏅 Gold Medallist — Top of Cohort</span>
+        </div>
+      </div>
+      <div class="edu-row r">
+        <div>
+          <div class="edu-year">2023 – 2024</div>
+          <div class="edu-inst">National Law University · Delhi, India</div>
+        </div>
+        <div>
+          <div class="edu-degree">LLM</div>
+          <ul class="edu-ul">
+            <li><strong>All India Rank 49</strong> out of 4,000 students (Top 1.2% nationally)</li>
+            <li>Research: Legal personhood and liabilities of AI</li>
+          </ul>
+          <span class="edu-badge">🏆 AIR 49 / 4,000</span>
+        </div>
+      </div>
+      <div class="edu-row r">
+        <div>
+          <div class="edu-year">2020 – 2023</div>
+          <div class="edu-inst">Faculty of Law, University of Delhi · India</div>
+        </div>
+        <div>
+          <div class="edu-degree">LLB (Hons)</div>
+          <ul class="edu-ul">
+            <li><strong>All India Rank 76</strong> out of 1.3 million students (selection rate under 0.005%)</li>
+            <li>Coursework: Banking Regulations, Companies Act, Commercial Drafting, Contract, Insurance Law</li>
+            <li>Co-Convener, Debate and Discussion Society</li>
+          </ul>
+          <span class="edu-badge">🏆 AIR 76 / 1.3 million</span>
+        </div>
+      </div>
+      <div class="edu-row r">
+        <div>
+          <div class="edu-year">In Progress</div>
+          <div class="edu-inst">Multiple Institutions</div>
+        </div>
+        <div>
+          <div class="edu-degree">Professional Certifications</div>
+          <ul class="edu-ul">
+            <li>Basel Institute on Governance — AML Online Course ✓</li>
+            <li>Sumsub — AML Fundamentals 2025 ✓</li>
+            <li>LexisNexis Advanced (Certified) · Westlaw Advanced (Certified) ✓</li>
+            <li>PwC US Tax · KPMG US Tax · Freshfields · Clifford Chance simulations ✓</li>
+            <li>ICA Certificate in Anti-Money Laundering — in progress</li>
+            <li>CFA Level I — commenced (ethics, financial reporting, economics)</li>
+          </ul>
+          <span class="edu-badge">AML Certified</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BEYOND ─────────────────────────────────────────── -->
+<section style="background: var(--bg2);">
+  <div class="wrap">
+    <div class="r">
+      <div class="s-label">Beyond the CV</div>
+      <h2 class="s-title">Achievements &amp; Skills</h2>
+    </div>
+    <div class="beyond-grid r">
+      <div>
+        <div class="s-label" style="margin-bottom:1.5rem;">Achievements</div>
+        <ul class="achiev-list">
+          <li><span class="achiev-year">2025</span><span class="achiev-text">Finance Volunteer, MS Society — financial governance and compliance for local community group</span></li>
+          <li><span class="achiev-year">2023</span><span class="achiev-text">Qualified Advocate, All India Bar Council, Delhi</span></li>
+          <li><span class="achiev-year">2022</span><span class="achiev-text">Student Co-Convener, Debate &amp; Discussion Society, Campus Law Centre</span></li>
+          <li><span class="achiev-year">2019</span><span class="achiev-text">Head Organiser, Lit Celebrate, Motilal Nehru College</span></li>
+          <li><span class="achiev-year">2017</span><span class="achiev-text">2nd Prize, Inter-college Literary Quiz Competition</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="s-label" style="margin-bottom:1.5rem;">Skills &amp; Tools</div>
+        <div class="skill-rows">
+          <div class="skill-row">
+            <div class="skill-key">Languages</div>
+            <div class="skill-val">English (Fluent), Hindi (Native), Urdu (Native)</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-key">Regulatory</div>
+            <div class="skill-val">UK AML/CTF Framework, FCA Environment, FATF Recommendations, International Taxation, Corporate Law, Companies Act, Banking Regulations</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-key">Compliance</div>
+            <div class="skill-val">KYC/CDD Principles, Beneficial Ownership, Risk Documentation, Audit-quality File Management, Financial Governance</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-key">Legal Research</div>
+            <div class="skill-val">Westlaw (Advanced Certified), LexisNexis (Advanced Certified), Companies House, Legal Drafting</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-key">Soft Skills</div>
+            <div class="skill-val">Regulatory communication, attention to detail, cross-cultural stakeholder management, discretion and confidentiality</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ───────────────────────────────────────── -->
+<div class="contact-section" id="contact">
+  <div class="wrap">
+    <div class="s-label r">Get in touch</div>
+    <div class="contact-hero r">Let's connect.<br><em>Together.</em></div>
+    <p class="contact-sub r">Open to roles in financial crime, AML/KYC and compliance — where legal precision and regulatory knowledge are both valued.</p>
+    <div class="contact-grid r">
+      <div class="cgrid-cell">
+        <div class="cgrid-label">Email</div>
+        <div class="cgrid-val"><a href="mailto:mdarifgood@gmail.com">mdarifgood@gmail.com</a></div>
+      </div>
+      <div class="cgrid-cell">
+        <div class="cgrid-label">Phone (UK)</div>
+        <div class="cgrid-val"><a href="tel:+447741555703">+44 7741 555 703</a></div>
+      </div>
+      <div class="cgrid-cell">
+        <div class="cgrid-label">LinkedIn</div>
+        <div class="cgrid-val"><a href="https://www.linkedin.com/in/md-arif-ansari123" target="_blank">linkedin.com/in/md-arif-ansari123</a></div>
+      </div>
+      <div class="cgrid-cell">
+        <div class="cgrid-label">Location</div>
+        <div class="cgrid-val">Coventry / London · Open to relocate</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Arif Ansari · Financial Crime &amp; Compliance</p>
+  <p>Host free · GitHub Pages · Netlify · Vercel</p>
+</footer>
+
+<script>
+/* CURSOR */
+const ring = document.getElementById('c-ring');
+const dot  = document.getElementById('c-dot');
+let mx=0, my=0, rx=0, ry=0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx+'px'; dot.style.top = my+'px';
+});
+(function loop(){
+  rx += (mx-rx)*.11; ry += (my-ry)*.11;
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  requestAnimationFrame(loop);
+})();
+
+document.querySelectorAll('a, button, .pcard, .exp-row, .edu-row, .astat, .etag, .hstat')
+  .forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.classList.add('on'); dot.classList.add('on'); });
+    el.addEventListener('mouseleave', () => { ring.classList.remove('on'); dot.classList.remove('on'); });
+  });
+
+/* SCROLL REVEAL */
+const io = new IntersectionObserver(
+  entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); }),
+  { threshold: .07 }
+);
+document.querySelectorAll('.r').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
